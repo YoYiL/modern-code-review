@@ -21,35 +21,67 @@ def is_win(game):
         win = True
     return win
 
+def is_tie(game):
+    for row in game:
+        for cell in row:
+            if cell == ' ':
+                return False
+    return True
+
+def print_board(game):
+    print("\nCurrent chessboard：")
+    print("  1 2 3")
+    for i, row in enumerate(game, 1):
+        print(f"{i} {' '.join(row)}")
+    print()
+
+def is_valid_move(i, j, game):
+    if not (0 <= i <= 2 and 0 <= j <= 2):
+        return False
+    if game[i][j] != ' ':
+        return False
+    return True
+    
 def main():
     game = [[' ' for _ in range(3)] for _ in range(3)]  # Tic-tac-toe board
-    player1 = 'X'
-    player2 = 'O'
-    turn = False  # False for player 1's turn, True for player 2's turn. Player 1 first.
-    print("X = Player 1")
-    print("O = Player 2")
-    for n in range(9):
+    turn = False  # False for player 1's turn, True for player 2's turn
+    
+    print("Welcome！")
+    print("X = player1")
+    print("O = player2")
+    print("input：row space cloumn（e.g. 1 2）")
+    
+    print_board(game)
+    
+    while True:
         turn = not turn  # Switch turns
-        if not turn:
-            print("Player 1: ", end="")
-        else:
-            print("Player 2: ", end="")
-        print("Which cell to mark? i:[1..3], j:[1..3]: ")
-        i, j = map(int, input().split())
-        i -= 1
-        j -= 1
-        if not turn:
-            game[i][j] = 'X'
-        else:
-            game[i][j] = 'O'
+        current_player = "player1" if not turn else "player2"
+        while True:
+            try:
+                print(f"{current_player}的回合")
+                i, j = map(int, input("input：row space cloumn: ").split())
+                i -= 1  # Convert to 0-based index
+                j -= 1
+                if is_valid_move(i, j, game):
+                    break
+                else:
+                    print("invalid！")
+            except (ValueError, IndexError):
+                print("invalid!")
+        
+        # Make the move
+        game[i][j] = 'X' if not turn else 'O'
+        print_board(game)
+        
+        # Check for win
         if is_win(game):
-            print("Win!")
-            break  # Terminate the game
-        if n == 8:  # All cells have been filled
-            print("Tie!")
-        # Show the game board
-        for row in game:
-            print(" ".join(row))
+            print(f"Done！{current_player}win！")
+            break
+            
+        # Check for tie
+        if is_tie(game):
+            print("tie！")
+            break
 
 if __name__ == "__main__":
     main()
