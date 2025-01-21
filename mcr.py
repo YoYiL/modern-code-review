@@ -21,6 +21,13 @@ def is_win(game):
         win = True
     return win
 
+def is_tie(game):
+    for row in game:
+        for cell in row:
+            if cell == ' ':
+                return False
+    return True
+    
 def main():
     game = [[' ' for _ in range(3)] for _ in range(3)]  # Tic-tac-toe board
     player1 = 'X'
