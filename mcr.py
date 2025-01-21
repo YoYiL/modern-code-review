@@ -58,7 +58,7 @@ def main():
         current_player = "player1" if not turn else "player2"
         while True:
             try:
-                print(f"{current_player}的回合")
+                print(f"{current_player} round")
                 i, j = map(int, input("input：row space cloumn: ").split())
                 i -= 1  # Convert to 0-based index
                 j -= 1
