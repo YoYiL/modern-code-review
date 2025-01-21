@@ -52,7 +52,7 @@ def main():
         if is_win(game):
             print("Win!")
             break  # Terminate the game
-        if n == 8:  # All cells have been filled
+        if is_tie(game):  # All cells have been filled
             print("Tie!")
         # Show the game board
         for row in game:
